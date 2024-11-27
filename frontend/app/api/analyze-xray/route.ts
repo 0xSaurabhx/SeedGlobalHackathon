@@ -3,21 +3,6 @@ import { analyzeXrayImage } from '@/utils/groq'
 
 export const runtime = 'edge'
 
-function formatAnalysis(content: string) {
-  const sections = content.split('\n\n')
-  const formattedAnalysis = sections
-    .filter(section => section.trim() && !section.includes("I'm not a medical professional"))
-    .map(section => {
-      const lines = section.split('\n')
-      const title = lines[0].replace(/\*\*/g, '').trim()
-      const content = lines.slice(1).join('\n').trim()
-      return { title, content }
-    })
-    .filter(section => section.title && section.content)
-
-  return { formattedAnalysis }
-}
-
 export async function POST(request: Request) {
   try {
     const { imageUrl } = await request.json()
@@ -42,7 +27,11 @@ export async function POST(request: Request) {
       throw new Error('Invalid response from AI model')
     }
 
-    const analysis = formatAnalysis(response.choices[0].message.content)
+    const analysis = response.choices[0].message.content
+    if (analysis.includes("I can't help you with that")) {
+      throw new Error('Model refused to analyze the image. Please try with a different image or prompt.')
+    }
+
     return NextResponse.json({ analysis })
   } catch (error) {
     console.error('Error analyzing image:', error)

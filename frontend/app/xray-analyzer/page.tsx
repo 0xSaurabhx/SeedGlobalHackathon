@@ -89,7 +89,7 @@ export default function XrayAnalyzerPage() {
   return (
     <div className="container mx-auto max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">X-Ray Analysis Demo</h1>
+        <h1 className="text-3xl font-bold tracking-tight">AI X-Ray Analysis</h1>
         <p className="text-muted-foreground">Educational tool for understanding X-ray imagery</p>
         <div className="mt-4 rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4 dark:bg-yellow-400/10">
           <div className="flex">
