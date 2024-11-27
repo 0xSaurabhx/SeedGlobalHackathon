@@ -75,7 +75,7 @@ export default function XrayAnalyzerPage() {
     <div className="container mx-auto max-w-7xl">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">AI X-Ray Analysis</h1>
-        <p className="text-muted-foreground">Educational tool for understanding X-ray imagery</p>
+        <p className="text-muted-foreground">AI Based tool for understanding X-ray imagery</p>
         <div className="mt-4 rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4 dark:bg-yellow-400/10">
           <div className="flex">
             <div className="ml-3">
@@ -150,7 +150,7 @@ export default function XrayAnalyzerPage() {
         {/* Results Section */}
         <Card>
           <CardHeader>
-            <CardTitle>Educational Insights</CardTitle>
+            <CardTitle>AI Insights</CardTitle>
             <CardDescription>
               General observations about the X-ray image structure and features
             </CardDescription>
