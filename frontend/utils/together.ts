@@ -5,6 +5,8 @@ export const together = new Together({
 })
 
 export async function analyzeXrayImage(imageUrl: string) {
+  console.log('Sending request with URL:', imageUrl) // Debug log
+
   const response = await together.chat.completions.create({
     messages: [
       {
@@ -12,7 +14,7 @@ export async function analyzeXrayImage(imageUrl: string) {
         content: JSON.stringify([
           {
             type: "text",
-            text: "For educational purposes only: Please describe what you observe in this X-ray image in general terms. Include a clear disclaimer that this is not medical advice and should not be used for diagnosis."
+            text: "Please describe the visual elements and general features you observe in this X-ray image. Focus on describing the visible structures and patterns from an educational perspective. Remember, this is for educational purposes only and not for medical diagnosis."
           },
           {
             type: "image_url",
@@ -23,14 +25,14 @@ export async function analyzeXrayImage(imageUrl: string) {
         ])
       }
     ],
-    model: "meta-llama/Llama-Vision-Free",
+    model: "togethercomputer/llama-2-70b-chat",  // Try a different model
     max_tokens: 512,
     temperature: 0.7,
     top_p: 0.7,
     top_k: 50,
     repetition_penalty: 1,
-    stop: ["<|eot_id|>", "<|eom_id|>"]
   })
 
+  console.log('API Response:', response) // Debug log
   return response
 }
