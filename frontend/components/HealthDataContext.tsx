@@ -63,7 +63,13 @@ export function HealthDataProvider({ children }: { children: ReactNode }) {
       fetch(`/api/health-data?userId=${session.user.id}`)
         .then(response => response.json())
         .then(data => {
-          setHealthData(data)
+          if (data.analysisResults) {
+            // Parse the analysis results if they're stored as a string
+            const parsedResults = typeof data.analysisResults === 'string' 
+              ? JSON.parse(data.analysisResults) 
+              : data.analysisResults
+            setHealthData(parsedResults)
+          }
         })
         .catch(error => console.error('Error fetching health data:', error))
     }

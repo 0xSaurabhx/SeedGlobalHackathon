@@ -117,6 +117,9 @@ export default function HealthInputForm() {
       }
 
       const analysisResults = await analysisResponse.json()
+      
+      // Directly set the analysis results to the context
+      setHealthData(analysisResults)
       setAnalysisResults(analysisResults)
 
       // Then, save both inputs and analysis results
@@ -136,7 +139,6 @@ export default function HealthInputForm() {
         throw new Error("Failed to save health data")
       }
 
-      setHealthData(analysisResults)
       toast({
         title: "Success",
         description: "Your health data has been analyzed and saved.",
