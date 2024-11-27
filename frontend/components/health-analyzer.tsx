@@ -67,8 +67,8 @@ export function HealthAnalyzer() {
                 <FiInfo className="ml-2 text-gray-500 cursor-pointer" />
               </Tooltip>
             </div>
-            {/* <p className="mt-2 font-semibold">Predicted Condition: {summary.predicted_condition}</p>
-            <p>Confidence: {(summary.confidence * 100).toFixed(1)}%</p> */}
+            <p className="mt-2 font-semibold">Predicted Condition: {summary.predicted_condition}</p>
+            {/* <p>Confidence: {(summary.confidence * 100).toFixed(1)}%</p> */}
           </div>
         </div>
         <div>
