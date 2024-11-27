@@ -32,7 +32,10 @@ export async function POST(request: Request) {
       throw new Error('Model refused to analyze the image. Please try with a different image or prompt.')
     }
 
-    return NextResponse.json({ analysis })
+    return NextResponse.json({ 
+      analysis: response.choices[0].message.content,
+      type: response.type 
+    })
   } catch (error) {
     console.error('Error analyzing image:', error)
     return NextResponse.json(
