@@ -42,6 +42,7 @@ const initialHealthInputs: HealthInputs = {
   HbA1c: 5.0,
   "LDL Cholesterol": 90,
   "HDL Cholesterol": 50,
+  ALT: 30, // Adding ALT (Alanine Transaminase) field
   AST: 25,
   "Heart Rate": 75,
   Creatinine: 1.0,
@@ -91,17 +92,27 @@ export default function HealthInputForm() {
     }
 
     try {
+      // Prepare analysis payload with required fields
+      const analysisPayload = {
+        ALT: healthInputs.ALT,
+        AST: healthInputs.AST,
+        Glucose: healthInputs.Glucose,
+        // Add other required fields as needed
+        ...healthInputs
+      }
+
       // First, get analysis from external API
       const analysisResponse = await fetch("http://127.0.0.1:8000/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(healthInputs),
+        body: JSON.stringify(analysisPayload),
       })
 
       if (!analysisResponse.ok) {
-        throw new Error("Failed to get analysis")
+        const errorData = await analysisResponse.json()
+        throw new Error(`Analysis failed: ${JSON.stringify(errorData)}`)
       }
 
       const analysisResults = await analysisResponse.json()
@@ -134,7 +145,7 @@ export default function HealthInputForm() {
       console.error("Error:", error)
       toast({
         title: "Error",
-        description: "Failed to process health data. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to process health data. Please try again.",
         variant: "destructive",
       })
       setIsConnected(false)
