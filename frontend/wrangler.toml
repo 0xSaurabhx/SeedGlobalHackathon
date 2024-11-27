@@ -1,0 +1,7 @@
+name = "medical-dashboard"
+compatibility_date = "2023-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "health-plus"
+database_id = "23d57134-649b-4e14-8448-23e9d59a6115"
