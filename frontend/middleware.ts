@@ -1,19 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getToken } from 'next-auth/jwt'
+import { D1Database } from '@cloudflare/workers-types'
 
 export const config = {
-  matcher: ['/((?!api/auth|_next/static|_next/image|favicon.ico).*)'],
+  matcher: '/api/:path*',
 }
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request })
-
-  if (!token) {
-    const url = new URL('/api/auth/signin', request.url)
-    url.searchParams.set('callbackUrl', encodeURI(request.url))
-    return NextResponse.redirect(url)
+export function middleware(request: NextRequest) {
+  // Make D1 database available globally
+  if (!global.DB) {
+    global.DB = request.nextUrl.searchParams.get('DB') as unknown as D1Database
   }
-
   return NextResponse.next()
 }

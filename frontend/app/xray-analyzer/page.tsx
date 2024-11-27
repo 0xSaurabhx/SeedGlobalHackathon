@@ -3,16 +3,17 @@
 import { useState, useCallback } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+// Removed unused import
 import { useDropzone } from "react-dropzone"
 import Image from "next/image"
 import { Upload, FileUp, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export default function XrayAnalyzerPage() {
   const [image, setImage] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState<string>("")
-  const [analysis, setAnalysis] = useState<string>("")
+  const [analysis, setAnalysis] = useState<{ formattedAnalysis?: { title: string, content: string }[] } | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>("")
 
@@ -167,8 +168,38 @@ export default function XrayAnalyzerPage() {
                 <p>{error}</p>
               </div>
             ) : analysis ? (
-              <div className="prose prose-zinc dark:prose-invert max-w-none">
-                <p className="whitespace-pre-wrap">{analysis}</p>
+              <div className="space-y-6">
+                <div className="rounded-lg border-l-4 border-blue-400 bg-blue-50 p-4 dark:bg-blue-400/10">
+                  <p className="text-sm text-blue-700 dark:text-blue-400">
+                    This is an educational analysis of the X-ray image. For accurate medical interpretation, 
+                    please consult with a qualified healthcare professional.
+                  </p>
+                </div>
+                
+                <Accordion type="single" collapsible className="w-full">
+                  {analysis?.formattedAnalysis?.map((section: { title: string, content: string }, index: number) => (
+                    <AccordionItem key={index} value={`section-${index}`}>
+                      <AccordionTrigger className="text-lg font-semibold">
+                        {section.title}
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="prose prose-zinc dark:prose-invert max-w-none">
+                          {section.content.split('\n').map((paragraph: string, pIndex: number) => {
+                            if (paragraph.startsWith('*')) {
+                              // Handle bullet points
+                              return (
+                                <ul key={pIndex} className="my-2">
+                                  <li className="ml-4">{paragraph.substring(2)}</li>
+                                </ul>
+                              )
+                            }
+                            return <p key={pIndex} className="my-2">{paragraph}</p>
+                          })}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </div>
             ) : (
               <div className="flex h-[200px] items-center justify-center text-muted-foreground">

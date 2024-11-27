@@ -27,14 +27,28 @@ export async function POST(request: Request) {
       throw new Error('Invalid response from AI model')
     }
 
-    const analysis = response.choices[0].message.content
-    if (analysis.includes("I can't help you with that")) {
-      throw new Error('Model refused to analyze the image. Please try with a different image or prompt.')
-    }
+    const rawAnalysis = response.choices[0].message.content
+
+    // Format the analysis into sections
+    const sections = rawAnalysis.split('\n\n').filter(Boolean)
+    const formattedAnalysis = sections.map(section => {
+      const lines = section.split('\n')
+      let title = lines[0].replace(/[:#]*/g, '').trim()
+      const content = lines.slice(1).join('\n').trim()
+      
+      // If no clear title is found, generate one based on content
+      if (!title || title === content) {
+        if (content.includes('body part')) title = 'Identified Region'
+        else if (content.includes('visible')) title = 'Visible Structures'
+        else if (content.includes('pattern')) title = 'Notable Features'
+        else title = 'Additional Observations'
+      }
+
+      return { title, content }
+    })
 
     return NextResponse.json({ 
-      analysis: response.choices[0].message.content,
-      type: response.type 
+      analysis: { formattedAnalysis }
     })
   } catch (error) {
     console.error('Error analyzing image:', error)
