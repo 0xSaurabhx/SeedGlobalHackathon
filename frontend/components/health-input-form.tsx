@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useHealthData } from "@/components/HealthDataContext"
 import { useSession } from "next-auth/react"
 import { Session } from "next-auth"
+import { HealthAnalyzer } from "@/components/health-analyzer"
 
 interface CustomSession extends Session {
   user: {
@@ -181,12 +182,11 @@ export default function HealthInputForm() {
           <Button type="submit" className="w-full">Submit Health Data</Button>
         </form>
         {isConnected && <p className="text-green-500">Connected</p>}
+        
+        {/* Replace the raw JSON display with HealthAnalyzer */}
         {analysisResults && (
-          <div className="mt-4 p-4 border rounded-lg">
-            <h3 className="font-bold mb-2">Analysis Results</h3>
-            <pre className="whitespace-pre-wrap">
-              {JSON.stringify(analysisResults, null, 2)}
-            </pre>
+          <div className="mt-4">
+            <HealthAnalyzer />
           </div>
         )}
       </CardContent>

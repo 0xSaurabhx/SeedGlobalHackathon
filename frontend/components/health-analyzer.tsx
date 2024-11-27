@@ -8,7 +8,7 @@ import { FiAlertCircle, FiInfo } from "react-icons/fi"
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 
-export default function HealthAnalyzer() {
+export function HealthAnalyzer() {
   const { healthData } = useHealthData()
 
   if (!healthData) {
@@ -16,6 +16,18 @@ export default function HealthAnalyzer() {
       <Card className="h-full">
         <CardContent className="flex items-center justify-center h-full">
           No health data available. Please submit your health metrics.
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (!healthData.summary || !healthData.analysis) {
+    return (
+      <Card className="h-full">
+        <CardContent className="p-6">
+          <div className="text-center text-red-500">
+            Invalid analysis data format. Please try submitting again.
+          </div>
         </CardContent>
       </Card>
     )
@@ -162,4 +174,6 @@ export default function HealthAnalyzer() {
     </Card>
   )
 }
+
+export default HealthAnalyzer
 
