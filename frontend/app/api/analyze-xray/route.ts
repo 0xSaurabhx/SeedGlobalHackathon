@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
-import { analyzeXrayImage } from '../../../utils/together'
+import { analyzeXrayImage } from '@/utils/together'
+
+export const runtime = 'edge'
 
 export async function POST(request: Request) {
   try {
@@ -7,6 +9,13 @@ export async function POST(request: Request) {
 
     if (!imageUrl) {
       return NextResponse.json({ error: 'Image URL is required' }, { status: 400 })
+    }
+
+    if (!process.env.TOGETHER_API_KEY) {
+      return NextResponse.json(
+        { error: 'API configuration missing' },
+        { status: 500 }
+      )
     }
 
     // Get analysis from Together AI
