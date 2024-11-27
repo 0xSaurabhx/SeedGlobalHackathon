@@ -54,6 +54,8 @@ export default function HealthInputForm() {
   const { setHealthData } = useHealthData()
   const [healthInputs, setHealthInputs] = useState<HealthInputs>(initialHealthInputs)
   const [isConnected, setIsConnected] = useState<boolean>(false)
+  const [analysisResults, setAnalysisResults] = useState<any>(null)
+  const [hasPreviousData, setHasPreviousData] = useState<boolean>(false)
   const { toast } = useToast()
 
   useEffect(() => {
@@ -63,6 +65,10 @@ export default function HealthInputForm() {
         .then(data => {
           if (data?.healthMetrics) {
             setHealthInputs(JSON.parse(data.healthMetrics))
+            setAnalysisResults(JSON.parse(data.analysisResults))
+            setHasPreviousData(true)
+          } else {
+            setHasPreviousData(false)
           }
         })
         .catch(console.error)
@@ -83,29 +89,52 @@ export default function HealthInputForm() {
       })
       return
     }
+
     try {
-      const response = await fetch("/api/health-data", {
+      // First, get analysis from external API
+      const analysisResponse = await fetch("http://127.0.0.1:8000/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...healthInputs, userId: session.user.id }),
+        body: JSON.stringify(healthInputs),
       })
-      if (!response.ok) {
-        throw new Error("Failed to submit health data")
+
+      if (!analysisResponse.ok) {
+        throw new Error("Failed to get analysis")
       }
-      const data = await response.json()
-      setHealthData(data)
+
+      const analysisResults = await analysisResponse.json()
+      setAnalysisResults(analysisResults)
+
+      // Then, save both inputs and analysis results
+      const saveResponse = await fetch("/api/health-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...healthInputs,
+          userId: session.user.id,
+          analysisResults,
+        }),
+      })
+
+      if (!saveResponse.ok) {
+        throw new Error("Failed to save health data")
+      }
+
+      setHealthData(analysisResults)
       toast({
-        title: "Health data submitted",
-        description: "Your health data has been successfully analyzed.",
+        title: "Success",
+        description: "Your health data has been analyzed and saved.",
       })
       setIsConnected(true)
     } catch (error) {
-      console.error("Error submitting health data:", error)
+      console.error("Error:", error)
       toast({
         title: "Error",
-        description: "Failed to submit health data. Please try again.",
+        description: "Failed to process health data. Please try again.",
         variant: "destructive",
       })
       setIsConnected(false)
@@ -116,7 +145,11 @@ export default function HealthInputForm() {
     <Card>
       <CardHeader>
         <CardTitle>Health Input Form</CardTitle>
-        <CardDescription>Enter your health metrics for analysis</CardDescription>
+        <CardDescription>
+          {hasPreviousData 
+            ? "Previous data loaded. You can modify and resubmit."
+            : "No previous data available. Please enter your health metrics."}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -137,6 +170,14 @@ export default function HealthInputForm() {
           <Button type="submit" className="w-full">Submit Health Data</Button>
         </form>
         {isConnected && <p className="text-green-500">Connected</p>}
+        {analysisResults && (
+          <div className="mt-4 p-4 border rounded-lg">
+            <h3 className="font-bold mb-2">Analysis Results</h3>
+            <pre className="whitespace-pre-wrap">
+              {JSON.stringify(analysisResults, null, 2)}
+            </pre>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
