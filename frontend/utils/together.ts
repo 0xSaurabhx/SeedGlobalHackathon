@@ -12,7 +12,7 @@ export async function analyzeXrayImage(imageUrl: string) {
         content: JSON.stringify([
           {
             type: "text",
-            text: "analyze this xray image"
+            text: "For educational purposes only: Please describe what you observe in this X-ray image in general terms. Include a clear disclaimer that this is not medical advice and should not be used for diagnosis."
           },
           {
             type: "image_url",

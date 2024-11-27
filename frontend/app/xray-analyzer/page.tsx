@@ -73,8 +73,19 @@ export default function XrayAnalyzerPage() {
   return (
     <div className="container mx-auto max-w-7xl">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">X-Ray Analysis</h1>
-        <p className="text-muted-foreground">Upload an X-ray image for AI-powered analysis</p>
+        <h1 className="text-3xl font-bold tracking-tight">X-Ray Analysis Demo</h1>
+        <p className="text-muted-foreground">Educational tool for understanding X-ray imagery</p>
+        <div className="mt-4 rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4 dark:bg-yellow-400/10">
+          <div className="flex">
+            <div className="ml-3">
+              <p className="text-sm text-yellow-700 dark:text-yellow-400">
+                <strong>Important Disclaimer:</strong> This tool is for educational and demonstration purposes only. 
+                It should not be used for medical diagnosis. Always consult qualified healthcare professionals for 
+                medical advice and interpretation of X-ray images.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -138,9 +149,9 @@ export default function XrayAnalyzerPage() {
         {/* Results Section */}
         <Card>
           <CardHeader>
-            <CardTitle>Analysis Results</CardTitle>
+            <CardTitle>Educational Insights</CardTitle>
             <CardDescription>
-              AI-powered insights from your X-ray image
+              General observations about the X-ray image structure and features
             </CardDescription>
           </CardHeader>
           <CardContent>
