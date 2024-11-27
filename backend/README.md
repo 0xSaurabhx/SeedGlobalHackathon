@@ -1,37 +1,30 @@
-# Health Analysis API
+# Medical Dashboard Backend API
 
-A sophisticated API for analyzing health metrics and providing detailed health insights using machine learning.
+FastAPI-based backend service for analyzing health metrics and providing detailed medical insights using machine learning.
 
 ## Features
 
-- Comprehensive health analysis based on blood test results and vital signs
-- Machine learning-based disease prediction
-- Detailed health score calculation
-- Risk level assessment
+- Health metrics analysis
+- ML-based disease prediction
+- Risk assessment
+- Health score calculation
 - Personalized recommendations
-- Trend analysis of health metrics
-- Abnormal value detection and warnings
+- Abnormal value detection
 
-## Installation & Setup
+## Setup
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/health-analysis-api.git
-cd health-analysis-api
-```
-
-2. Create a virtual environment and activate it:
+1. Create virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Install dependencies:
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Start the server:
+3. Start the server:
 ```bash
 uvicorn api.main:app --reload
 ```
@@ -197,6 +190,8 @@ health-analysis-api/
 ├── data/
 │   └── blood_test_data.csv
 ├── requirements.txt
+├── run.sh               # Start script
+├── test_cases.sh  
 └── README.md
 ```
 

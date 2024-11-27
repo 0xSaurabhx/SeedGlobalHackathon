@@ -1,9 +1,16 @@
-# Heal+
+# Heal+ 
 
-A modern medical dashboard built with Next.js, TypeScript, and Tailwind CSS.
+A comprehensive medical dashboard system built with Next.js and FastAPI, featuring health metrics analysis and ML-based disease prediction.
+
+## System Architecture
+
+The project consists of two main components:
+- Frontend: Next.js application with modern UI components
+- Backend: FastAPI service with ML-powered health analysis
 
 ## Tech Stack
 
+### Frontend
 - Next.js 14
 - TypeScript
 - Tailwind CSS
@@ -13,47 +20,30 @@ A modern medical dashboard built with Next.js, TypeScript, and Tailwind CSS.
 - AWS S3/Cloudflare R2
 - Groq AI Integration
 
-## Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-
-## Getting Started
-
-1. Clone the repository
-2. Install dependencies:
-I'll help you create a comprehensive README.md file for the frontend directory. Based on the project structure and files shown, it appears to be a Next.js application with Tailwind CSS, authentication, and various integrations.
-
-### [README.md](file:///home/saurabh/Downloads/MedicalDashboard/frontend/README.md)
-
-Here's the content for the README file:
-
-```markdown
-
-
-# Medical Dashboard Frontend
-
-A modern medical dashboard built with Next.js, TypeScript, and Tailwind CSS.
-
-## Tech Stack
-
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- NextAuth.js
-- Radix UI Components
-- Recharts
-- AWS S3/Cloudflare R2
-- Groq AI Integration
+### Backend
+- FastAPI
+- Python
+- Scikit-learn
+- Pandas
+- NumPy
+- Pydantic
 
 ## Prerequisites
 
 - Node.js 18+ 
+- Python 3.8+
 - npm or yarn
+- pip
 
 ## Getting Started
 
-1. Clone the repository
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
+
 2. Install dependencies:
 ```bash
 npm install
@@ -77,12 +67,42 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
 
+### Backend Setup
+
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
+
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Run the FastAPI server:
+```bash
+uvicorn main:app --reload
+```
+
+Open [http://localhost:8000](http://localhost:8000) to view the API documentation.
+
 ## Available Scripts
 
+### Frontend
 - `npm run dev` - Start development server
 - `npm run build` - Build production bundle
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+
+### Backend
+- `uvicorn main:app --reload` - Start development server
+- `pytest` - Run tests
 
 ## Project Structure
 
@@ -95,6 +115,13 @@ frontend/
 ├── utils/        # Helper functions
 ├── public/       # Static assets
 └── types/        # TypeScript type definitions
+
+backend/
+├── app/           # FastAPI app modules
+├── models/        # Data models and schemas
+├── services/      # Business logic and services
+├── tests/         # Test cases
+└── main.py        # Entry point for the FastAPI app
 ```
 
 ## Features
@@ -106,6 +133,8 @@ frontend/
 - AI integration with Groq
 - Responsive design
 - Dark mode support
+- ML-based health metrics analysis
+- Disease prediction using Scikit-learn
 
 ## Contributing
 
