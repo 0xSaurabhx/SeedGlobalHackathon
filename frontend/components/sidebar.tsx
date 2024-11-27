@@ -14,6 +14,7 @@ const sidebarItems = [
   { name: "Dashboard", href: "/" },
   { name: "Health Analyzer", href: "/health-analyzer" },
   { name: "Wear OS Tracker", href: "/wear-os-tracker" },
+  { name: "X-Ray Analyzer", href: "/xray-analyzer" }, // Add new page
 ]
 
 export default function Sidebar() {
