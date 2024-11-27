@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { analyzeXrayImage } from '@/utils/together'
+import { analyzeXrayImage } from '../../../utils/together'
 
 export async function POST(request: Request) {
   try {
