@@ -9,7 +9,6 @@ import { useToast } from "@/components/ui/use-toast"
 import { useHealthData } from "@/components/HealthDataContext"
 import { useSession } from "next-auth/react"
 import { Session } from "next-auth"
-import { HealthAnalyzer } from "@/components/health-analyzer"
 
 interface CustomSession extends Session {
   user: {
@@ -56,7 +55,7 @@ export default function HealthInputForm() {
   const { setHealthData } = useHealthData()
   const [healthInputs, setHealthInputs] = useState<HealthInputs>(initialHealthInputs)
   const [isConnected, setIsConnected] = useState<boolean>(false)
-  const [analysisResults, setAnalysisResults] = useState<any>(null)
+  // Removed unused analysisResults state
   const [hasPreviousData, setHasPreviousData] = useState<boolean>(false)
   const { toast } = useToast()
 
@@ -67,8 +66,7 @@ export default function HealthInputForm() {
         .then(data => {
           if (data?.healthMetrics) {
             setHealthInputs(JSON.parse(data.healthMetrics))
-            setAnalysisResults(JSON.parse(data.analysisResults))
-            setHasPreviousData(true)
+            // Removed setting analysisResults state
           } else {
             setHasPreviousData(false)
           }
@@ -120,9 +118,8 @@ export default function HealthInputForm() {
       
       // Directly set the analysis results to the context
       setHealthData(analysisResults)
-      setAnalysisResults(analysisResults)
+      // Removed setting analysisResults state
 
-      // Then, save both inputs and analysis results
       const saveResponse = await fetch("/api/health-data", {
         method: "POST",
         headers: {
@@ -184,13 +181,6 @@ export default function HealthInputForm() {
           <Button type="submit" className="w-full">Submit Health Data</Button>
         </form>
         {isConnected && <p className="text-green-500">Connected</p>}
-        
-        {/* Replace the raw JSON display with HealthAnalyzer */}
-        {analysisResults && (
-          <div className="mt-4">
-            <HealthAnalyzer />
-          </div>
-        )}
       </CardContent>
     </Card>
   )
