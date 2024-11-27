@@ -11,7 +11,6 @@ import { Menu } from "lucide-react"
 import { useSession, signOut } from "next-auth/react" // Added imports
 
 const sidebarItems = [
-  { name: "Dashboard", href: "/" },
   { name: "Health Analyzer", href: "/health-analyzer" },
   { name: "Wear OS Tracker", href: "/wear-os-tracker" },
   { name: "X-Ray Analyzer", href: "/xray-analyzer" }, // Add new page
@@ -59,7 +58,7 @@ export default function Sidebar() {
           <div className="flex h-full flex-col">
             <div className="flex h-[60px] items-center border-b px-6">
               <Link className="flex items-center gap-2 font-semibold" href="/" onClick={() => setOpen(false)}>
-                <span className="">Medical Dashboard</span>
+                <span className="">Heal+</span>
               </Link>
             </div>
             {SidebarContent}
@@ -70,7 +69,7 @@ export default function Sidebar() {
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-[60px] items-center border-b px-6">
             <Link className="flex items-center gap-2 font-semibold" href="/">
-              <span className="">Medical Dashboard</span>
+              <span className="">Heal+</span>
             </Link>
           </div>
           {SidebarContent}
