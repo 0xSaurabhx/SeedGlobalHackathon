@@ -25,7 +25,7 @@ export async function analyzeXrayImage(imageUrl: string) {
         ])
       }
     ],
-    model: "togethercomputer/llama-2-70b-chat",  // Try a different model
+    model: "meta-llama/Llama-Vision-Free",  // Try a different model
     max_tokens: 512,
     temperature: 0.7,
     top_p: 0.7,
