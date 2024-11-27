@@ -32,7 +32,7 @@ export async function POST(request: Request) {
 
     await s3Client.send(command)
 
-    const imageUrl = `https://${bucketName}.r2.cloudflarestorage.com/${fileName}`
+    const imageUrl = `https://pub-ddad297497a2490c8620a13f6d369756.r2.dev/${fileName}`
     return NextResponse.json({ imageUrl })
   } catch (error) {
     console.error('Error uploading image:', error)
