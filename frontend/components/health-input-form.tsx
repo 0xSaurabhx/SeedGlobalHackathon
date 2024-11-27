@@ -24,30 +24,30 @@ interface HealthInputs {
 }
 
 const initialHealthInputs: HealthInputs = {
-  Glucose: 85,
-  Cholesterol: 180,
-  Hemoglobin: 14,
-  Platelets: 250000,
-  "White Blood Cells": 7000,
-  "Red Blood Cells": 5.0,
-  Hematocrit: 42,
-  "Mean Corpuscular Volume": 90,
-  "Mean Corpuscular Hemoglobin": 30,
-  "Mean Corpuscular Hemoglobin Concentration": 34,
-  Insulin: 10,
-  BMI: 22,
-  "Systolic Blood Pressure": 110,
-  "Diastolic Blood Pressure": 70,
-  Triglycerides: 100,
-  HbA1c: 5.0,
-  "LDL Cholesterol": 90,
-  "HDL Cholesterol": 50,
-  ALT: 30, // Adding ALT (Alanine Transaminase) field
-  AST: 25,
-  "Heart Rate": 75,
-  Creatinine: 1.0,
-  Troponin: 0.02,
-  "C-reactive Protein": 1.5
+  "Glucose (mg/dL)": 85,
+  "Cholesterol (mg/dL)": 180,
+  "Hemoglobin (g/dL)": 14,
+  "Platelets (per µL)": 250000,
+  "White Blood Cells (per µL)": 7000,
+  "Red Blood Cells (million/mcL)": 5.0,
+  "Hematocrit (%)": 42,
+  "Mean Corpuscular Volume (fL)": 90,
+  "Mean Corpuscular Hemoglobin (pg)": 30,
+  "Mean Corpuscular Hemoglobin Concentration (g/dL)": 34,
+  "Insulin (uIU/mL)": 10,
+  "BMI (kg/m²)": 22,
+  "Systolic Blood Pressure (mmHg)": 110,
+  "Diastolic Blood Pressure (mmHg)": 70,
+  "Triglycerides (mg/dL)": 100,
+  "HbA1c (%)": 5.0,
+  "LDL Cholesterol (mg/dL)": 90,
+  "HDL Cholesterol (mg/dL)": 50,
+  "ALT (U/L)": 30,
+  "AST (U/L)": 25,
+  "Heart Rate (bpm)": 75,
+  "Creatinine (mg/dL)": 1.0,
+  "Troponin (ng/mL)": 0.02,
+  "C-reactive Protein (mg/L)": 1.5
 }
 
 export default function HealthInputForm() {
@@ -93,11 +93,11 @@ export default function HealthInputForm() {
     try {
       // Prepare analysis payload with required fields
       const analysisPayload = {
-        ALT: healthInputs.ALT,
-        AST: healthInputs.AST,
-        Glucose: healthInputs.Glucose,
-        // Add other required fields as needed
-        ...healthInputs
+        // Strip the units from the keys when sending to the API
+        ...Object.entries(healthInputs).reduce((acc, [key, value]) => ({
+          ...acc,
+          [key.split(' (')[0]]: value
+        }), {})
       }
 
       // First, get analysis from external API
